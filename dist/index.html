@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.2cdaf7bc.css">
+    <title>Food Tracker</title>
+  </head>
+  <body>
+    <header><h1>My Calorie Tracker</h1></header>
+    <main>
+      <section class="section" id="input">
+        <h2>Add food</h2>
+        <form id="form">
+            <label for="foodName">Food name:</label>
+            <select name="foodName" id="foodName">
+              <option value="pleaseSelect">Please select</option>
+              <option value="pasta">Pasta</option>
+              <option value="spagetti">Spagetti</option>
+              <option value="rice">Rice</option>
+              <option value="bread">Bread</option>
+              <option value="pizza">Pizza</option>
+              <option value="burger">Burger</option>
+              <option value="fries">French fries</option>
+              <option value="salad">salad</option>
+              <option value="mushroom">Mushroom</option>
+              <option value="beans">Beans</option>
+              <option value="chicken">Chicken</option>
+              <option value="egg">Egg</option>
+              <option value="fish">Fish</option>
+              <option value="redMeat">Red meat</option>
+              <option value="apples">Apples</option>
+              <option value="berries">Berries</option>
+              <option value="banana">Bananan</option>
+              <option value="cake">Cake</option>
+              <option value="others">Others</option>
+
+            </select>
+            <div>
+              <label for="carbs">Carbs:</label>
+              <input type="number" name="carbs" id="carbs" placeholder="0g">
+            </div>
+            <div>
+              <label for="protein">Protein:</label>
+              <input type="number" name="protein" id="protein" placeholder="0g">
+            </div>
+            <div>
+              <label for="fat">Fat:</label>
+              <input type="number" name="fat" id="fat" placeholder="0g">
+            </div>
+            <button type="submit" id="addBtn">Add</button>
+          </form>
+      </section>
+      <section class="section" id="stats">
+          <h2>Stats</h2>
+        <div id="chartContainer">
+          <canvas id="myChart" width="400" height="400"></canvas>
+          
+      </div></section>
+    <section class="section" id="summary">
+      <div class="calorieLog">
+        <h2>Log</h2>
+        <h3>Total calories logged: <strong class="calorieTotal">#kcal</strong></h3>
+      </div>
+      <div class="cards"> 
+        <h2>Card Name</h2>
+        <ul>
+          <li>Carbs</li>
+          <li>Protein</li>
+          <li>Fat</li>
+        </ul>
+      </div>
+    </section>
+    </main>
+    <footer>&copy My calorie calculator 2022</footer>
+    <script src="/index.0641b553.js" defer=""></script>
+  </body>
+</html>
