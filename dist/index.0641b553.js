@@ -523,59 +523,109 @@ var _auto = require("chart.js/auto");
 var _autoDefault = parcelHelpers.interopDefault(_auto);
 // selectors
 const form = document.querySelector("#form");
-const foodName = document.querySelector("#foodName");
-const carbs = document.querySelector("#carbs");
-const protein = document.querySelector("#protein");
-const fat = document.querySelector("#fat");
+const foodName = document.querySelector("#foodName").value;
+const carbs = document.querySelector("#carbs").value;
+const protein = document.querySelector("#protein").value;
+const fat = document.querySelector("#fat").value;
 const addBtn = document.querySelector("#addBtn");
-const chartCanvas = document.querySelector("#myChart");
 const cards = document.querySelector(".cards");
 // fetch API
 const API = new _fetchWrapperJs.FetchWrapper("https://firestore.googleapis.com/v1/projects/programmingjs-90a13/databases/(default)/documents/");
 // add form
-const addInputs = (e)=>{
-    e.preventDefault();
-    const foodNameInput = foodName.value;
-    const carbsInput = carbs.value;
-    const proteinInput = protein.value;
-    const fatInput = fat.value;
-    console.log(fatInput);
-    if (foodNameInput !== "Please select" && carbs && protein && fat) _snackbarDefault.default.show("Food added successfully");
-    else _snackbarDefault.default.show("Please enter your inputs");
-    postInput(foodNameInput, carbsInput, proteinInput, fatInput);
+const addInputs = (foodName1, carbs1, protein1, fat1)=>{
+    // event.preventDefault();
+    console.log(foodName1, carbs1, protein1, fat1);
+    if (foodName1 !== "Please select") {
+        postInput(foodName1, carbs1, protein1, fat1);
+        _snackbarDefault.default.show("Food added successfully");
+    } else _snackbarDefault.default.show("Please enter your inputs");
 };
 // Post data to API
-const postInput = (foodNameInput, carbsInput, proteinInput, fatInput)=>{
-    console.log(foodNameInput, carbsInput, proteinInput, fatInput);
+const postInput = (foodName2, carbs2, protein2, fat2)=>{
+    console.log(foodName2, carbs2, protein2, fat2);
     const body = {
         fields: {
             foodName: {
-                stringValue: foodNameInput
+                stringValue: foodName2
             },
             carbs: {
-                integerValue: carbsInput
+                integerValue: carbs2
             },
             protein: {
-                integerValue: proteinInput
+                integerValue: protein2
             },
             fat: {
-                integerValue: fatInput
+                integerValue: fat2
             }
         }
     };
     API.post("anupa88", body);
 };
-// calculate calorie and create myChart
+API.get("anupa88").then((data)=>{
+    let dataF = data.documents;
+    let fields = dataF.map((element)=>element.fields
+    );
+    fields.forEach((element)=>{
+        console.log("fat " + element.fat.integerValue);
+        console.log("protein " + element.protein.integerValue);
+        console.log("carbs " + element.carbs.integerValue);
+        console.log("foodName " + element.foodName.stringValue);
+    });
+    console.log(fields);
+});
+// snackbar
+// calculate calorie
 const carbsCalorie = carbs * 4;
 const proteinCalorie = protein * 4;
 const fatCalorie = fat * 9;
-createChartCanvas(carbsCalorie, proteinCalorie, fatCalorie);
-logTotalCalorie();
-renderCard();
+// createChartCanvas(carbsCalorie, proteinCalorie, fatCalorie);
+const createChart = (carbs3, protein3, fat3)=>{
+    let myChart = document.querySelector("#myChart").getContext("2d");
+    myChart = newChart(ctx, {
+        type: "bar",
+        data: {
+            labels: [
+                "Carbs",
+                "Protein",
+                "Fat"
+            ],
+            datasets: [
+                {
+                    label: "# Percentage",
+                    data: [
+                        carbs3,
+                        protein3,
+                        fat3
+                    ],
+                    backgroundColor: [
+                        "Blue",
+                        "Blue",
+                        "Blue"
+                    ],
+                    borderColor: [
+                        "white",
+                        "white",
+                        "white"
+                    ],
+                    borderWidth: 1
+                }, 
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+};
+// logTotalCalorie();
+// renderCard();
 // API.get("anupa88").then((data) => fetchCards(data.documents));
 // posting data to firebase API
 // event listener
-form.addEventListener("submit", addInputs);
+form.addEventListener("submit", addInputs(foodName, carbs, protein, fat));
 
 },{"./fetch-wrapper.js":"5hTQM","snackbar":"nwWOh","snackbar/dist/snackbar.min.css":"40LVv","chart.js/auto":"6r6LS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5hTQM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -603,6 +653,7 @@ class FetchWrapper {
         return this._send("delete", endpoint, body);
     }
     _send(method, endpoint, body) {
+        console.log("send" + body);
         return fetch(this.baseURL + endpoint, {
             method,
             headers: {

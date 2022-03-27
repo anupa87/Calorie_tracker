@@ -24,6 +24,7 @@ export class FetchWrapper {
   }
 
   _send(method, endpoint, body) {
+    console.log("send" + body);
     return fetch(this.baseURL + endpoint, {
       method,
       headers: {
