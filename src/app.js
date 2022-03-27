@@ -10,7 +10,6 @@ const carbs = document.querySelector("#carbs").value;
 const protein = document.querySelector("#protein").value;
 const fat = document.querySelector("#fat").value;
 const addBtn = document.querySelector("#addBtn");
-
 const cards = document.querySelector(".cards");
 
 // fetch API
@@ -19,11 +18,17 @@ const API = new FetchWrapper(
 );
 // add form
 
-const addInputs = (foodName, carbs, protein, fat) => {
-  // event.preventDefault();
-  console.log(foodName, carbs, protein, fat);
+const addInputs = (event) => {
+  event.preventDefault();
+
+  const foodName = document.querySelector("#foodName").value;
+  const carbs = document.querySelector("#carbs").value;
+  const protein = document.querySelector("#protein").value;
+  const fat = document.querySelector("#fat").value;
+
   if (foodName !== "Please select") {
     postInput(foodName, carbs, protein, fat);
+    createChart(carbs, protein, fat);
     snackbar.show("Food added successfully");
   } else {
     snackbar.show("Please enter your inputs");
@@ -69,11 +74,12 @@ API.get("anupa88").then((data) => {
 const carbsCalorie = carbs * 4;
 const proteinCalorie = protein * 4;
 const fatCalorie = fat * 9;
-
+let ctx = document.querySelector("#myChart");
+let chart;
 // createChartCanvas(carbsCalorie, proteinCalorie, fatCalorie);
 const createChart = (carbs, protein, fat) => {
-  let myChart = document.querySelector("#myChart").getContext("2d");
-  myChart = newChart(ctx, {
+  // myChart.getContext("2d");
+  chart = new chart(ctx, {
     type: "bar",
     data: {
       labels: ["Carbs", "Protein", "Fat"],
@@ -96,11 +102,11 @@ const createChart = (carbs, protein, fat) => {
     },
   });
 };
-
+myChart.innerHTML = chart;
 // logTotalCalorie();
 // renderCard();
 // API.get("anupa88").then((data) => fetchCards(data.documents));
 // posting data to firebase API
 
 // event listener
-form.addEventListener("submit", addInputs(foodName, carbs, protein, fat));
+form.addEventListener("submit", addInputs);
