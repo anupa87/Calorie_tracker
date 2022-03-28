@@ -44,7 +44,7 @@ section {
 #form {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-aroundm;
   margin-top: 1rem;
   line-height: 2rem;
 }
@@ -109,10 +109,8 @@ button:hover {
   line-height: 1.5rem;
   text-align: center;
 }
-li {
-  text-decoration: circle;
-  display: block;
-  justify-content: space-between;
+ul {
+  list-style: square;
 }
 footer {
   background-color: rgb(32, 30, 30);
