@@ -27,11 +27,10 @@ const addInputs = (event) => {
   const protein = document.querySelector("#protein").value;
   const fat = document.querySelector("#fat").value;
 
-  if (foodName !== "Please select") {
+  if (foodName !== "Please select" && carbs && protein & fat) {
     postInput(foodName, carbs, protein, fat);
     createChart(carbs, protein, fat);
-    totalCalorieLog();
-    renderCard();
+    totalCalorieLogValue.innerText = totalCalorieLog(carbs, protein, fat);
     snackbar.show("Food added successfully");
   } else {
     snackbar.show("Please check your inputs");
@@ -92,22 +91,72 @@ const createChart = (carbs, protein, fat) => {
     },
   });
 };
-// myChart.innerHTML = chart;
 
-// Show calorie log
 const totalCalorieLogValue = document.querySelector(".calorieTotal");
-let carbsCalorie = carbs * 4;
-let proteinCalorie = protein * 4;
-let fatCalorie = fat * 9;
-let totalCalorie = carbs * 4 + protein * 4 + fatCalorie * 9;
-console.log(carbsCalorie, proteinCalorie, fatCalorie, totalCalorie);
-
-// logTotalCalorie();
+// Show calorie log
+const totalCalorieLog = (carbs, protein, fat) => {
+  let totalCalorie = carbs * 4 + protein * 4 + fat * 9;
+  return totalCalorie;
+};
 
 // Show cards
-// renderCard();
+const renderCard = () => {
+  const fieldsArray = API.get("anupa88").then((data) => {
+    return data.documents.map((d) => d.fields);
+  });
+  fieldsArray.then((data) => {
+    data.forEach((item) => {
+      let cardDiv = document.createElement("div");
+      cardDiv.className = "card";
+      let cardBody = document.createElement("div");
+      cardBody.classnName = "card-body";
+      let cardTitle = document.createElement("h2");
+      cardTitle.className = "card-title";
+      cardTitle.innerHTML = item.foodName.stringValue;
+      let cardSubtitle = document.createElement("h3");
+      cardSubtitle.className = "card-subtitle";
+      cardSubtitle.innerHTML =
+        totalCalorieLog(
+          item.carbs.integerValue,
+          item.protein.integerValue,
+          item.fat.integerValue
+        ) + " calorie";
 
-// API.get("anupa88").then((data) => fetchCards(data.documents));
-
+      let ul = document.createElement("ul");
+      let li = document.createElement("li");
+      let carbsLi = document.createElement("li");
+      carbsLi.className = "carbs";
+      carbsLi.innerText = "carbs";
+      let carbsAmount = document.createElement("p");
+      carbsAmount.className = "carbsAmount";
+      carbsAmount.innerText = item.carbs.integerValue;
+      let proteinLi = document.createElement("li");
+      proteinLi.className = "protein";
+      proteinLi.innerText = "protein";
+      let proteinAmount = document.createElement("p");
+      proteinAmount.className = "proteinAmount";
+      proteinAmount.innerText = item.protein.integerValue;
+      let fatLi = document.createElement("li");
+      fatLi.className = "fat";
+      fatLi.innerText = "fat";
+      let fatAmount = document.createElement("p");
+      fatAmount.className = "fatAmount";
+      fatAmount.innerText = item.fat.integerValue;
+      cards.appendChild(cardDiv);
+      cardDiv.appendChild(cardBody);
+      cardBody.appendChild(cardTitle);
+      cardBody.appendChild(cardSubtitle);
+      cardBody.appendChild(ul);
+      ul.appendChild(li);
+      li.appendChild(carbsLi);
+      carbsLi.appendChild(carbsAmount);
+      li.appendChild(proteinLi);
+      li.appendChild(proteinAmount);
+      li.appendChild(fatLi);
+      li.appendChild(fatAmount);
+    });
+  });
+};
+renderCard();
 // event listener
 form.addEventListener("submit", addInputs);

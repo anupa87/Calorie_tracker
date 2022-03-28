@@ -8,48 +8,115 @@
 
 body {
   width: 100%;
-  height: 100vh;
-  background-color: rgb(91, 207, 202);
+  background-color: rgb(68, 149, 181);
   font-family: "Lato", sans-serif;
+  font-size: 18px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
   text-align: center;
-  border: 1px solid white;
 }
 
 header {
   width: 100%;
-  height: 15vh;
+  height: 100px;
   display: flex;
   flex-direction: column;
+  text-align: left;
   justify-content: center;
   color: white;
+  padding-left: 2rem;
+  border: 1px solid goldenrod;
+  box-shadow: 0 0 5px;
 }
 
 main {
-  width: 100%;
-  height: 80vh;
-  border-top: 1px solid rgb(91, 207, 202);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  padding: 2rem;
   text-align: left;
 }
-.section {
-  background-color: silver;
-  width: 100%;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid white;
-  line-height: 2.5rem;
+h2 {
+  font-size: 24px;
+  font-weight: 800;
 }
-/* #form {
-} */
+section {
+  margin-bottom: 2rem;
+}
+#form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 1rem;
+  line-height: 2rem;
+}
+select {
+  width: 200px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: medium;
+}
+.macronutrientInput {
+  width: 200px;
+  line-height: 3rem;
+  padding: 0.5rem;
+}
+input {
+  width: 80px;
+  height: 30px;
+  border: none;
+  border-radius: 3px;
+  text-align: right;
+  font-size: medium;
+  display: inline-block;
+}
+button {
+  width: 80px;
+  height: 30px;
+  font-size: medium;
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(218, 124, 65);
+}
+button:hover {
+  box-shadow: 0 5px 5px 0;
+}
+
+.calorieLog {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(245, 240, 240);
+  border-radius: 3px;
+  border: 1px solid goldenrod;
+  box-shadow: 0 0 5px;
+  text-align: center;
+  margin: 1rem 0 2rem 0;
+}
+.cards {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card {
+  width: 200px;
+  height: 200px;
+  background-color: rgb(245, 240, 240);
+  border: 1px solid #333;
+  box-shadow: 0 0 5px;
+  border-radius: 0.5rem;
+  margin: 0 3rem 3rem 0;
+  line-height: 1.5rem;
+  text-align: center;
+}
+li {
+  text-decoration: circle;
+  display: block;
+  justify-content: space-between;
+}
 footer {
   background-color: rgb(32, 30, 30);
   width: 100%;
-  /* height: 5vh; */
   color: dimgrey;
   text-align: center;
   font-size: 12px;

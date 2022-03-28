@@ -3,7 +3,7 @@ export class FetchWrapper {
     this.baseURL = baseURL;
   }
 
-  get(endpoint) {
+  async get(endpoint) {
     return fetch(this.baseURL + endpoint).then((response) => response.json());
   }
 

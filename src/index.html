@@ -10,7 +10,7 @@
   <body>
     <header><h1>My Calorie Tracker</h1></header>
     <main>
-      <section class="section" id="input">
+      <section>
         <h2>Add food</h2>
         <form id="form">
             <label for="foodName">Food name:</label>
@@ -36,45 +36,40 @@
               <option value="banana">Bananan</option>
               <option value="cake">Cake</option>
               <option value="others">Others</option>
-
             </select>
-            <div>
-              <label for="carbs">Carbs:</label>
-              <input type="number" name="carbs" id="carbs" placeholder="0g" />
+            <div class="macronutrientInput">
+              <div>
+                <label for="carbs">Carbs:</label>
+                <input type="number" name="carbs" id="carbs" placeholder="0g" />
+              </div>
+              <div>
+                <label for="protein">Protein:</label>
+                <input type="number" name="protein" id="protein" placeholder="0g" />
+              </div>
+              <div>
+                <label for="fat">Fat:</label>
+                <input type="number" name="fat" id="fat" placeholder="0g" />
+              </div>
             </div>
-            <div>
-              <label for="protein">Protein:</label>
-              <input type="number" name="protein" id="protein" placeholder="0g" />
-            </div>
-            <div>
-              <label for="fat">Fat:</label>
-              <input type="number" name="fat" id="fat" placeholder="0g" />
-            </div>
+            
             <button type="submit" id="addBtn">Add</button>
           </form>
       </section>
-      <section class="section" id="stats">
+      <section id="stats">
           <h2>Stats</h2>
         <div id="chartContainer">
-          <canvas id="myChart" width="400" height="400"></canvas>
+          <canvas id="myChart" width="200" height="300"></canvas>
           
       </section>
-    <section class="section" id="summary">
-      <div class ="calorieLog">
+    <section id="summary">
+      <div >
         <h2>Log</h2>
-        <h3>Total calories logged: <strong class="calorieTotal">#kcal</strong></h3>
+        <h3 class ="calorieLog">Total calories logged: <strong class="calorieTotal">0</strong> kcal</h3>
       </div>
-      <div class="cards"> 
-        <h2>Card Name</h2>
-        <ul>
-          <li>Carbs</li>
-          <li>Protein</li>
-          <li>Fat</li>
-        </ul>
-      </div>
+      <div class="cards"></div>
     </section>
     </main>
-    <!-- <footer>&copy My calorie calculator 2022</footer> -->
+    <footer>&copy My calorie calculator 2022</footer>
     <script type="module" src="app.js"></script>
   </body>
 </html>
