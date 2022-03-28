@@ -1,3 +1,4 @@
+// Import modules
 import { FetchWrapper } from "./fetch-wrapper.js";
 import snackbar from "snackbar";
 import "snackbar/dist/snackbar.min.css";
@@ -16,8 +17,8 @@ const cards = document.querySelector(".cards");
 const API = new FetchWrapper(
   "https://firestore.googleapis.com/v1/projects/programmingjs-90a13/databases/(default)/documents/"
 );
-// add form
 
+// Add Inputs
 const addInputs = (event) => {
   event.preventDefault();
 
@@ -29,9 +30,11 @@ const addInputs = (event) => {
   if (foodName !== "Please select") {
     postInput(foodName, carbs, protein, fat);
     createChart(carbs, protein, fat);
+    totalCalorieLog();
+    renderCard();
     snackbar.show("Food added successfully");
   } else {
-    snackbar.show("Please enter your inputs");
+    snackbar.show("Please check your inputs");
   }
 };
 
@@ -56,57 +59,55 @@ const postInput = (foodName, carbs, protein, fat) => {
   };
   API.post("anupa88", body);
 };
+
+// Get data
 API.get("anupa88").then((data) => {
-  let dataF = data.documents;
-  let fields = dataF.map((element) => element.fields);
+  let foodData = data.documents;
+  let fields = foodData.map((element) => element.fields);
   fields.forEach((element) => {
-    console.log("fat " + element.fat.integerValue);
-    console.log("protein " + element.protein.integerValue);
-    console.log("carbs " + element.carbs.integerValue);
-    console.log("foodName " + element.foodName.stringValue);
+    "fat " + element.fat.integerValue;
+    "protein " + element.protein.integerValue;
+    "carbs " + element.carbs.integerValue;
+    "foodName " + element.foodName.stringValue;
   });
-
-  console.log(fields);
 });
-// snackbar
 
-// calculate calorie
-const carbsCalorie = carbs * 4;
-const proteinCalorie = protein * 4;
-const fatCalorie = fat * 9;
-let ctx = document.querySelector("#myChart");
+// Create chart
+let ctx = document.querySelector("#myChart").getContext("2d");
 let chart;
-// createChartCanvas(carbsCalorie, proteinCalorie, fatCalorie);
 const createChart = (carbs, protein, fat) => {
-  // myChart.getContext("2d");
   chart = new chart(ctx, {
     type: "bar",
     data: {
       labels: ["Carbs", "Protein", "Fat"],
       datasets: [
         {
-          label: "# Percentage",
+          label: "Intake in gram",
           data: [carbs, protein, fat],
-          backgroundColor: ["Blue", "Blue", "Blue"],
+          backgroundColor: ["orange", "orange", "orange"],
           borderColor: ["white", "white", "white"],
           borderWidth: 1,
         },
       ],
     },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
   });
 };
-myChart.innerHTML = chart;
+// myChart.innerHTML = chart;
+
+// Show calorie log
+const totalCalorieLogValue = document.querySelector(".calorieTotal");
+let carbsCalorie = carbs * 4;
+let proteinCalorie = protein * 4;
+let fatCalorie = fat * 9;
+let totalCalorie = carbs * 4 + protein * 4 + fatCalorie * 9;
+console.log(carbsCalorie, proteinCalorie, fatCalorie, totalCalorie);
+
 // logTotalCalorie();
+
+// Show cards
 // renderCard();
+
 // API.get("anupa88").then((data) => fetchCards(data.documents));
-// posting data to firebase API
 
 // event listener
 form.addEventListener("submit", addInputs);
