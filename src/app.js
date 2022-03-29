@@ -29,9 +29,9 @@ const addInputs = (event) => {
 
   if (foodName !== "Please select" && carbs && protein & fat) {
     postInput(foodName, carbs, protein, fat);
+    snackbar.show("Food added successfully");
     createChart(carbs, protein, fat);
     totalCalorieLogValue.innerText = totalCalorieLog(carbs, protein, fat);
-    snackbar.show("Food added successfully");
   } else {
     snackbar.show("Please check your inputs");
   }
@@ -39,7 +39,6 @@ const addInputs = (event) => {
 
 // Post data to API
 const postInput = (foodName, carbs, protein, fat) => {
-  console.log(foodName, carbs, protein, fat);
   const body = {
     fields: {
       foodName: {
@@ -72,9 +71,12 @@ API.get("anupa88").then((data) => {
 });
 
 // Create chart
-let ctx = document.querySelector("#myChart").getContext("2d");
 let chart;
+let ctx = document.querySelector("#myChart").getContext("2d");
 const createChart = (carbs, protein, fat) => {
+  if (chart) {
+    chart.destroy();
+  }
   chart = new chart(ctx, {
     type: "bar",
     data: {
@@ -93,6 +95,7 @@ const createChart = (carbs, protein, fat) => {
 };
 
 const totalCalorieLogValue = document.querySelector(".calorieTotal");
+
 // Show calorie log
 const totalCalorieLog = (carbs, protein, fat) => {
   let totalCalorie = carbs * 4 + protein * 4 + fat * 9;
