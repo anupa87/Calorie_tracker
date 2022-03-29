@@ -145,6 +145,9 @@ const renderCard = () => {
       let fatAmount = document.createElement("p");
       fatAmount.className = "fatAmount";
       fatAmount.innerText = item.fat.integerValue;
+      let deleteBtn = document.createElement("button");
+      deleteBtn.className = "delete";
+
       cards.appendChild(cardDiv);
       cardDiv.appendChild(cardBody);
       cardBody.appendChild(cardTitle);
@@ -157,9 +160,22 @@ const renderCard = () => {
       li.appendChild(proteinAmount);
       li.appendChild(fatLi);
       li.appendChild(fatAmount);
+      cardDiv.appendChild(deleteBtn);
+      cardDiv.setAttribute("data-food-endpoint", item.name.slice(59));
     });
   });
 };
+function clearCards(e) {
+  if (e.target && e.target.classList.contains("delete")) {
+    console.log(e.target.parentElement);
+    e.target.parentElement.remove();
+
+    // to take the div food Endpoint and delete it
+    API.delete(e.target.parentElement.dataset.foodEndpoint, {});
+  }
+}
 renderCard();
+
 // event listener
 form.addEventListener("submit", addInputs);
+cards.addEventListener("click", clearCards);

@@ -79,6 +79,7 @@ button {
 }
 button:hover {
   box-shadow: 0 5px 5px 0;
+  cursor: pointer;
 }
 
 .calorieLog {
@@ -110,7 +111,7 @@ button:hover {
   text-align: center;
 }
 ul {
-  list-style: square;
+  list-style: none;
 }
 footer {
   background-color: rgb(32, 30, 30);
