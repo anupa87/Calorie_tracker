@@ -2,7 +2,7 @@
 import { FetchWrapper } from "./fetch-wrapper.js";
 import snackbar from "snackbar";
 import "snackbar/dist/snackbar.min.css";
-import chart from "chart.js/auto";
+import Chart from "chart.js/auto";
 
 // selectors
 const form = document.querySelector("#form");
