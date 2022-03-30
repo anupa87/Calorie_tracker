@@ -32,6 +32,7 @@ const addInputs = (event) => {
     createChart(carbs, protein, fat);
     totalCalorieLogValue.innerText = totalCalorieLog(carbs, protein, fat);
     snackbar.show("Food added successfully");
+    renderCard();
   } else {
     snackbar.show("Please check your inputs");
   }
@@ -94,6 +95,8 @@ const createChart = (carbs, protein, fat) => {
     },
   });
 };
+
+// Calorie log
 
 const totalCalorieLogValue = document.querySelector(".calorieTotal");
 // Show calorie log
@@ -166,17 +169,17 @@ const renderCard = () => {
   });
 };
 
+//clear cards
 function clearCards(e) {
   if (e.target && e.target.classList.contains("delete")) {
     console.log(e.target.parentElement);
     e.target.parentElement.remove();
 
-    // to take the div food Endpoint and delete it
+    // delete data from API
     API.delete(e.target.parentElement.dataset.foodEndpoint, {});
   }
 }
 
-renderCard();
 // event listener
 form.addEventListener("submit", addInputs);
 cards.addEventListener("click", clearCards);
