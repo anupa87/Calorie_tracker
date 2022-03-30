@@ -150,6 +150,7 @@ const renderCard = () => {
       fatAmount.innerText = item.fields.fat.integerValue;
       let deleteBtn = document.createElement("button");
       deleteBtn.className = "delete";
+      deleteBtn.innerText = "Delete";
 
       cards.appendChild(cardDiv);
       cardDiv.appendChild(cardBody);
