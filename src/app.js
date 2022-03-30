@@ -29,9 +29,9 @@ const addInputs = (event) => {
 
   if (foodName !== "Please select" && carbs && protein & fat) {
     postInput(foodName, carbs, protein, fat);
-    snackbar.show("Food added successfully");
     createChart(carbs, protein, fat);
     totalCalorieLogValue.innerText = totalCalorieLog(carbs, protein, fat);
+    snackbar.show("Food added successfully");
   } else {
     snackbar.show("Please check your inputs");
   }
@@ -39,6 +39,7 @@ const addInputs = (event) => {
 
 // Post data to API
 const postInput = (foodName, carbs, protein, fat) => {
+  console.log(foodName, carbs, protein, fat);
   const body = {
     fields: {
       foodName: {
@@ -77,7 +78,7 @@ const createChart = (carbs, protein, fat) => {
   if (chart) {
     chart.destroy();
   }
-  chart = new chart(ctx, {
+  chart = new Chart(ctx, {
     type: "bar",
     data: {
       labels: ["Carbs", "Protein", "Fat"],
@@ -95,7 +96,6 @@ const createChart = (carbs, protein, fat) => {
 };
 
 const totalCalorieLogValue = document.querySelector(".calorieTotal");
-
 // Show calorie log
 const totalCalorieLog = (carbs, protein, fat) => {
   let totalCalorie = carbs * 4 + protein * 4 + fat * 9;
@@ -105,7 +105,7 @@ const totalCalorieLog = (carbs, protein, fat) => {
 // Show cards
 const renderCard = () => {
   const fieldsArray = API.get("anupa88").then((data) => {
-    return data.documents.map((d) => d.fields);
+    return data.documents.map((d) => d);
   });
   fieldsArray.then((data) => {
     data.forEach((item) => {
@@ -115,14 +115,14 @@ const renderCard = () => {
       cardBody.classnName = "card-body";
       let cardTitle = document.createElement("h2");
       cardTitle.className = "card-title";
-      cardTitle.innerHTML = item.foodName.stringValue;
+      cardTitle.innerHTML = item.fields.foodName.stringValue;
       let cardSubtitle = document.createElement("h3");
       cardSubtitle.className = "card-subtitle";
       cardSubtitle.innerHTML =
         totalCalorieLog(
-          item.carbs.integerValue,
-          item.protein.integerValue,
-          item.fat.integerValue
+          item.fields.carbs.integerValue,
+          item.fields.protein.integerValue,
+          item.fields.fat.integerValue
         ) + " calorie";
 
       let ul = document.createElement("ul");
@@ -132,19 +132,19 @@ const renderCard = () => {
       carbsLi.innerText = "carbs";
       let carbsAmount = document.createElement("p");
       carbsAmount.className = "carbsAmount";
-      carbsAmount.innerText = item.carbs.integerValue;
+      carbsAmount.innerText = item.fields.carbs.integerValue;
       let proteinLi = document.createElement("li");
       proteinLi.className = "protein";
       proteinLi.innerText = "protein";
       let proteinAmount = document.createElement("p");
       proteinAmount.className = "proteinAmount";
-      proteinAmount.innerText = item.protein.integerValue;
+      proteinAmount.innerText = item.fields.protein.integerValue;
       let fatLi = document.createElement("li");
       fatLi.className = "fat";
       fatLi.innerText = "fat";
       let fatAmount = document.createElement("p");
       fatAmount.className = "fatAmount";
-      fatAmount.innerText = item.fat.integerValue;
+      fatAmount.innerText = item.fields.fat.integerValue;
       let deleteBtn = document.createElement("button");
       deleteBtn.className = "delete";
 
@@ -165,6 +165,7 @@ const renderCard = () => {
     });
   });
 };
+
 function clearCards(e) {
   if (e.target && e.target.classList.contains("delete")) {
     console.log(e.target.parentElement);
@@ -174,8 +175,8 @@ function clearCards(e) {
     API.delete(e.target.parentElement.dataset.foodEndpoint, {});
   }
 }
-renderCard();
 
+renderCard();
 // event listener
 form.addEventListener("submit", addInputs);
 cards.addEventListener("click", clearCards);
